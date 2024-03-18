@@ -5,4 +5,5 @@
     <h1>
         Main Landing PAge
     </h1>
+    <a class="btn btn-outline-info" href="GooglePage.aspx">GooglePage.aspx</a>
 </asp:Content>

@@ -1,5 +1,16 @@
 ﻿
 
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Util.Store;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Net;
+using System.Threading;
+
 namespace ProjectoFinal_Cinel_2024.Pages
 {
     public partial class GooglePage : System.Web.UI.Page
@@ -23,7 +34,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
         protected void Page_Load(object sender, EventArgs e)
         {
             //Apanaha do Webconfig o URL de redirecionamento para ativação e validação da autenticação
-            var uri = ConfigurationManager.AppSettings["URIApp"];
+            var uri = ConfigurationManager.AppSettings["URIApp"].ToString();
             var code = Request.QueryString["code"];
 
             if (string.IsNullOrEmpty(code))
@@ -56,7 +67,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
             // Obtém a página mestra atual como um objeto Layout
             var master = this.Master as MainLayout;
             // Cria um novo objeto EncripDesencript
-            EncriptDesencript passEncDEnc = new EncriptDesencript();
+            Assets.WebServices.EncriptDesencript passEncDEnc = new Assets.WebServices.EncriptDesencript();
             // Gera uma nova senha
             string passAuto = master.GerarNovaPalavraPasse();
 
@@ -126,7 +137,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
             // Obtém a página mestra atual como um objeto Layout
             var master = this.Master as MainLayout;
             // Cria um novo objeto EncripDesencript
-            EncriptDesencript passEncDEnc = new EncriptDesencript();
+            Assets.WebServices.EncriptDesencript passEncDEnc = new Assets.WebServices.EncriptDesencript();
             // Inicializa a variável resultado
             int resultado = 0;
             // Cria uma nova conexão SQL
