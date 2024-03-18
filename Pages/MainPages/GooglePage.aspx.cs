@@ -1,19 +1,4 @@
-﻿using ProjectoFinal_Cinel_2024.Assets.WebServices;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Util.Store;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿
 
 namespace ProjectoFinal_Cinel_2024.Pages
 {
