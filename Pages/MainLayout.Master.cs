@@ -22,9 +22,9 @@ namespace ProjectoFinal_Cinel_2024.Pages
             // Mapeamento dos nomes das páginas para os títulos
             var titleMap = new Dictionary<string, string>
             {
-                { "Test_Main", "WellCome" },
-                { "Login", "Entrar" },
-                { "SingUP", "Registrar" },
+                { "Landing", "Bem Vindo" },
+                { "SignIN", "Entrar" },
+                { "SignUP", "Registar" },
                 { "Collect", "Coleção" },
                 { "Montra", "Galleria" },
                 { "Backoffice", "Administração" },

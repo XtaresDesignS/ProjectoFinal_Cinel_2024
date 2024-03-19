@@ -22,8 +22,6 @@ namespace ProjectoFinal_Cinel_2024.Pages.BackendPages
             //{
             //       Response.Redirect(@"\Pages\errorPages\LogError.aspx");
             //}
-
-
         }
     }
 }

@@ -97,7 +97,7 @@
     <Content Include="Pages\MainPages\GooglePage.aspx" />
     <Content Include="Pages\MainPages\Landing.aspx" />
     <Content Include="Pages\MainPages\SignIN.aspx" />
-    <Content Include="Pages\MainPages\SingUP.aspx" />
+    <Content Include="Pages\MainPages\SignUP.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -175,12 +175,12 @@
     <Compile Include="Pages\MainPages\SignIN.aspx.designer.cs">
       <DependentUpon>SignIN.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPages\SingUP.aspx.cs">
-      <DependentUpon>SingUP.aspx</DependentUpon>
+    <Compile Include="Pages\MainPages\SignUP.aspx.cs">
+      <DependentUpon>SignUP.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\MainPages\SingUP.aspx.designer.cs">
-      <DependentUpon>SingUP.aspx</DependentUpon>
+    <Compile Include="Pages\MainPages\SignUP.aspx.designer.cs">
+      <DependentUpon>SignUP.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
