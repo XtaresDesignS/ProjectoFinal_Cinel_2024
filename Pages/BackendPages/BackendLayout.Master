@@ -46,6 +46,16 @@
                                 <a class="nav-link" href="#">Contactos </a>
                             </li>
                             <li class="nav-item">
+
+                                <lord-icon class="nav-icon"
+                                    src="https://cdn.lordicon.com/lenjvibx.json"
+                                    trigger="click"
+                                    state="morph-open"
+                                    style="width: 30px; height: 30px">
+                                </lord-icon>
+                                <a class="nav-link" href="#">Cursos </a>
+                            </li>
+                            <li class="nav-item">
                                 <lord-icon class="nav-icon" src="https://cdn.lordicon.com/gkgkfbzm.json" trigger="in" delay="1500"
                                     stroke="light" state="in-reveal" style="width: 30px; height: 30px">
                                 </lord-icon>

@@ -89,9 +89,11 @@
     <Content Include="Assets\WebServices\EncriptDesencript.asmx" />
     <Content Include="Assets\XMLS\Formata_Avatar.xslt" />
     <Content Include="Assets\XMLS\Formata_menu.xslt" />
+    <Content Include="Pages\BackendPages\Pages\Cursos.aspx" />
     <Content Include="Pages\BackendPages\Pages\Landing_back.aspx" />
     <Content Include="Pages\errorPages\Error404.aspx" />
     <Content Include="Pages\errorPages\Errors.aspx" />
+    <Content Include="Pages\errorPages\LogError.aspx" />
     <Content Include="Pages\MainPages\GooglePage.aspx" />
     <Content Include="Pages\MainPages\Landing.aspx" />
     <Content Include="Pages\MainPages\SignIN.aspx" />
@@ -109,6 +111,13 @@
     </Compile>
     <Compile Include="Pages\BackendPages\BackendLayout.Master.designer.cs">
       <DependentUpon>BackendLayout.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BackendPages\Pages\Cursos.aspx.cs">
+      <DependentUpon>Cursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\BackendPages\Pages\Cursos.aspx.designer.cs">
+      <DependentUpon>Cursos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\BackendPages\Pages\Landing_back.aspx.cs">
       <DependentUpon>Landing_back.aspx</DependentUpon>
@@ -130,6 +139,13 @@
     </Compile>
     <Compile Include="Pages\errorPages\Errors.aspx.designer.cs">
       <DependentUpon>Errors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\errorPages\LogError.aspx.cs">
+      <DependentUpon>LogError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\errorPages\LogError.aspx.designer.cs">
+      <DependentUpon>LogError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\GooglePage.aspx.cs">
       <DependentUpon>GooglePage.aspx</DependentUpon>
