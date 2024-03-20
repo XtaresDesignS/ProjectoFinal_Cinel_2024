@@ -1,5 +1,9 @@
-﻿using System;
+﻿using ProjectoFinal_Cinel_2024.Assets.WebServices;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,10 +18,6 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
 
         }
 
-
-
-
-
         //protected void btn_signin_Click(object sender, EventArgs e)
         //{
         //    string nomeUtilizador = tb_utilizador.Text;
@@ -27,76 +27,45 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
 
         //public void LoginUsuario(string nomeUtilizador, string senha)
         //{
-        //    //Chama o webservice de encriptação e desencriptação
-        //    EncriptDesencript passEncDenc = new EncriptDesencript();
-        //    //chama eventos da master
         //    var master = this.Master as MainLayout;
-
-        //    lbl_mensagem.Text = "";
-        //    using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["CasaDasMoedas_DBConnectionString"].ConnectionString))
+        //    EncriptDesencript passEncDEnc = new EncriptDesencript();
+        //    string nomeUtilizador = tb_nome_utilizador.Text;
+        //    string pass = passEncDEnc.Encriptar(tb_pass_utilizador.Text);
+        //    using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["NumismaticaConnectionString"].ConnectionString))
         //    {
-        //        using (SqlCommand myCommand = new SqlCommand("GetUtilizadoresData", myConn))
+        //        using (SqlCommand myCommand = new SqlCommand("AuthenticaUser", myConn))
         //        {
         //            myCommand.CommandType = CommandType.StoredProcedure;
         //            myCommand.Parameters.AddWithValue("@Nome_Utilizador", nomeUtilizador);
-        //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", passEncDenc.Encriptar(senha));
-        //            myCommand.Parameters.Add("@Retorno", SqlDbType.Int).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@Ativo", SqlDbType.Bit).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@Foto", SqlDbType.VarBinary, -1).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@Perfil_Nome", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output; // Especifique o tamanho aqui
-        //            myCommand.Parameters.Add("@Perfil_id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-
+        //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", pass);
+        //            SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.VarChar, 500);
+        //            returnParameter.Direction = ParameterDirection.Output;
         //            myConn.Open();
         //            myCommand.ExecuteNonQuery();
-
-        //            bool logado = false;
-        //            Session["logado"] = logado;
-        //            int respostaSP = Convert.ToInt32(myCommand.Parameters["@Retorno"].Value);
-
-        //            if (respostaSP == 1)
+        //            string result = returnParameter.Value.ToString();
+        //            if (result == "Sucesso")
         //            {
-        //                bool ativo = Convert.ToBoolean(myCommand.Parameters["@Ativo"].Value);
-        //                byte[] foto = (byte[])myCommand.Parameters["@Foto"].Value;
-        //                int id = (int)myCommand.Parameters["@Id"].Value;
-        //                int perfil_id = (int)myCommand.Parameters["@Perfil_Id"].Value;
-        //                string perfil_Nome = (string)myCommand.Parameters["@Perfil_Nome"].Value;
-
-        //                if (ativo == false)
+        //                using (SqlDataReader reader = myCommand.ExecuteReader())
         //                {
-        //                    lbl_mensagem.Text = "Por favor, confira o seu email e ative sua conta !!!";
-        //                    ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='SignIn.aspx' }, 2000);", true);
+        //                    if (reader.Read())
+        //                    {   // Armazena todas as informações do usuário na sessão aqui
+        //                        Session["id_Utilizador"] = reader["id_Utilizador"].ToString();
+        //                        Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
+        //                        Session["Img_utilizador"] = ((byte[])reader["Foto_Utilizador"]).Length > 0 ? $"data:image/PNG;base64,{Convert.ToBase64String((byte[])reader["Foto_Utilizador"])}" : $@"https://picsum.photos/200";
+        //                        Session["logado"] = reader["Nome_Perfil"].ToString();
+        //                    }
         //                }
-        //                else
-        //                {
-        //                    // Armazene todas as informações do usuário na sessão aqui
-        //                    Session["Pass_Utilizador"] = tb_pw.Text;
-        //                    Session["id_Utilizador"] = id;
-        //                    Session["Nome_Utilizador"] = tb_utilizador.Text;
-        //                    Session["ativo"] = ativo;
-        //                    string imgDataURL = "data:image/jpg;base64," + Convert.ToBase64String(foto);
-        //                    Session["Img_utilizador"] = imgDataURL;
-        //                    Session["logado"] = perfil_Nome;
-
-        //                    // Define-se logado como true após um login bem-sucedido
-        //                    Session["logado"] = true;
-
-        //                    Response.Redirect("Inicio.aspx");
-
-
-        //                }
+        //                Response.Redirect("/MainPages/Landing.aspx");
+        //                // Chama o método
         //                master.CarregaXML();
         //            }
         //            else
         //            {
-        //                lbl_mensagem.Text = "Utilizador e/ou palavra-passe errados !!!";
-        //                Session["logado"] = false;
-        //                ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='SignIn.aspx' }, 2000);", true);
+        //                lb_Mensagem.Text = result;
         //            }
-
         //        }
         //    }
+        //}
         //}
     }
 }

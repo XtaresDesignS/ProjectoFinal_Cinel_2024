@@ -1,5 +1,10 @@
-﻿using System;
+﻿using ProjectoFinal_Cinel_2024.Assets.WebServices;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,67 +18,52 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
         {
 
         }
-        //protected void btn_Regist_Click(object sender, EventArgs e)
-        //{
-
-        //    //chama eventos da Master
-        //    var master = this.Master as MainLayout;
-
-        //    //utiliza a encriptação no webservice
-        //    EncriptDesencript passencdenc = new EncriptDesencript();
-
-        //    byte[] imgBinaryData;
-
-        //    // Verificar se o usuário forneceu uma imagem
-        //    if (fu_image.PostedFile.ContentLength > 0)
+        //    protected void btn_Regist_Click(object sender, EventArgs e)
         //    {
-        //        imgBinaryData = new byte[fu_image.PostedFile.ContentLength];
-        //        fu_image.PostedFile.InputStream.Read(imgBinaryData, 0, fu_image.PostedFile.ContentLength);
-        //    }
-        //    else
-        //    {
-        //        // Se o usuário não forneceu uma imagem, use uma imagem padrão
-        //        string imagePath = Server.MapPath("~/Images/profile.png");
-        //        imgBinaryData = File.ReadAllBytes(imagePath);
-        //    }
 
-        //    using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString))
-        //    using (SqlCommand myCommand = new SqlCommand("RegistarUtilizador", myConn) { CommandType = CommandType.StoredProcedure })
-        //    {
-        //        myCommand.Parameters.AddWithValue("@Nome_Utilizador", tb_nome.Text);
-        //        myCommand.Parameters.AddWithValue("@Email_Utilizado", tb_email.Text);
-        //        myCommand.Parameters.AddWithValue("@Pass_Utilizador", passencdenc.Encriptar(tb_pw.Text));
-        //        myCommand.Parameters.AddWithValue("@Foto_Utilizador", imgBinaryData);
+        //        //utiliza a encriptação no webservice
+        //        EncriptDesencript passencdenc = new EncriptDesencript();
+        //        //chama eventos da Master
+        //        var master = this.Master as MainLayout;
 
-        //        SqlParameter valor = new SqlParameter("@Retorno", SqlDbType.Int) { Direction = ParameterDirection.Output };
-        //        myCommand.Parameters.Add(valor);
+        //        //Conversão independente do ficheiro de imagem
+        //        Stream imgStream = Flpd_Avatar.PostedFile.InputStream;
+        //        int tamanhoFicheiro = Flpd_Avatar.PostedFile.ContentLength;
+        //        byte[] imgBinary = new byte[tamanhoFicheiro];
+        //        imgStream.Read(imgBinary, 0, tamanhoFicheiro);   
 
-        //        // Adicionar o parâmetro de saída para o token de ativação
-        //        SqlParameter tokenAtivacao = new SqlParameter("@TokenAtivacao", SqlDbType.UniqueIdentifier) { Direction = ParameterDirection.Output };
-        //        myCommand.Parameters.Add(tokenAtivacao);
-
-        //        // Adicionar o parâmetro de saída para a data de expiração do token
-        //        SqlParameter dataExpiracaoToken = new SqlParameter("@DataExpiracaoToken", SqlDbType.DateTime) { Direction = ParameterDirection.Output };
-        //        myCommand.Parameters.Add(dataExpiracaoToken);
-
-        //        myConn.Open();
-        //        myCommand.ExecuteNonQuery();
-
-        //        int respostaSP = Convert.ToInt32(myCommand.Parameters["@Retorno"].Value);
-
-        //        lbl_mensagem.Text = respostaSP == 1 ? "Utilizador inserido com sucesso !!!\n\nVerifique o seu e-mail e ative a sua conta !!!" : "Utilizador já existe !!!\n\nTente outro e-mail por favor !!!";
-
-        //        // Se o registo foi bem-sucedido, enviar o email de ativação
-        //        if (respostaSP == 1)
+        //        using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString))
+        //        using (SqlCommand myCommand = new SqlCommand("RegistaUtilizador", myConn))
         //        {
-        //            string token = tokenAtivacao.Value.ToString();
-        //            master.EnviaEmail(tb_email.Text, token);
-        //            ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='Inicio.aspx' }, 3000);", true);
-        //        }
-        //        else
-        //            ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='SignUp.aspx' }, 1500);", true);
-        //    }
+        //            myConn.Open();
+        //            myCommand.CommandType = CommandType.StoredProcedure;
 
-        //}
+        //            myCommand.Parameters.AddWithValue("@Nome_Utilizador", tb_nome.Text);
+        //            myCommand.Parameters.AddWithValue("@Email_Utilizado", tb_email.Text);
+        //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", passencdenc.Encriptar(tb_pw.Text));
+        //            myCommand.Parameters.AddWithValue("@Foto_Utilizador", imgBinary);
+
+        //            SqlParameter valor = new SqlParameter("@Retorno", SqlDbType.Int) { Direction = ParameterDirection.Output };
+        //            myCommand.Parameters.Add(valor);               
+        //            int respostaSP = Convert.ToInt32(myCommand.Parameters["@Retorno"].Value);      
+
+        //            // Se o registo foi bem-sucedido, enviar o email de ativação
+        //            if (respostaSP == 1)
+        //            {
+        //                string token = string.Empty;
+        //                int idUser = 0;
+
+        //                SqlDataReader reader = myCommand.ExecuteReader();
+        //                if (reader.Read())
+        //                {
+        //                   token = reader["@TokenAtivacao"].ToString();
+        //                   idUser = (int)reader["@Id_Utilizador"];
+        //                }
+        //                myConn.Close();
+        //                master.EnviaEmail(tb_email.Text, token);
+        //            }             
+        //        }
+
+        //    }
     }
 }
