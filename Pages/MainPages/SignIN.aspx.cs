@@ -36,7 +36,7 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
         //        using (SqlCommand myCommand = new SqlCommand("AuthenticaUser", myConn))
         //        {
         //            myCommand.CommandType = CommandType.StoredProcedure;
-        //            myCommand.Parameters.AddWithValue("@Nome_Utilizador", nomeUtilizador);
+        //            myCommand.Parameters.AddWithValue("@Email_Utilizado", nomeUtilizador);
         //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", pass);
         //            SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.VarChar, 500);
         //            returnParameter.Direction = ParameterDirection.Output;
@@ -65,7 +65,6 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
         //            }
         //        }
         //    }
-        //}
         //}
     }
 }

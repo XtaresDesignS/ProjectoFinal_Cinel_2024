@@ -18,52 +18,51 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
         {
 
         }
-        //    protected void btn_Regist_Click(object sender, EventArgs e)
-        //    {
 
-        //        //utiliza a encriptação no webservice
-        //        EncriptDesencript passencdenc = new EncriptDesencript();
-        //        //chama eventos da Master
-        //        var master = this.Master as MainLayout;
+        protected void btn_registarUser_Click(object sender, EventArgs e)
+        {
+            //utiliza a encriptação no webservice
+            EncriptDesencript passencdenc = new EncriptDesencript();
+            //chama eventos da Master
+            var master = this.Master as MainLayout;
 
-        //        //Conversão independente do ficheiro de imagem
-        //        Stream imgStream = Flpd_Avatar.PostedFile.InputStream;
-        //        int tamanhoFicheiro = Flpd_Avatar.PostedFile.ContentLength;
-        //        byte[] imgBinary = new byte[tamanhoFicheiro];
-        //        imgStream.Read(imgBinary, 0, tamanhoFicheiro);   
+            //Conversão independente do ficheiro de imagem
+            Stream imgStream = fu_image.PostedFile.InputStream;
+            int tamanhoFicheiro = fu_image.PostedFile.ContentLength;
+            byte[] imgBinary = new byte[tamanhoFicheiro];
+            imgStream.Read(imgBinary, 0, tamanhoFicheiro);
 
-        //        using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["MyDBConnectionString"].ConnectionString))
-        //        using (SqlCommand myCommand = new SqlCommand("RegistaUtilizador", myConn))
-        //        {
-        //            myConn.Open();
-        //            myCommand.CommandType = CommandType.StoredProcedure;
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["GestCinel2_DBConnectionString"].ConnectionString))
+            using (SqlCommand myCommand = new SqlCommand("RegistarUtilizador", myConn))
+            {
+                myConn.Open();
+                myCommand.CommandType = CommandType.StoredProcedure;
 
-        //            myCommand.Parameters.AddWithValue("@Nome_Utilizador", tb_nome.Text);
-        //            myCommand.Parameters.AddWithValue("@Email_Utilizado", tb_email.Text);
-        //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", passencdenc.Encriptar(tb_pw.Text));
-        //            myCommand.Parameters.AddWithValue("@Foto_Utilizador", imgBinary);
+                myCommand.Parameters.AddWithValue("@Nome_Utilizador", tb_nome.Text);
+                myCommand.Parameters.AddWithValue("@Email_Utilizado", tb_email.Text);
+                myCommand.Parameters.AddWithValue("@Pass_Utilizador", passencdenc.Encriptar(tb_pw.Text));
+                myCommand.Parameters.AddWithValue("@Foto_Utilizador", imgBinary);
 
-        //            SqlParameter valor = new SqlParameter("@Retorno", SqlDbType.Int) { Direction = ParameterDirection.Output };
-        //            myCommand.Parameters.Add(valor);               
-        //            int respostaSP = Convert.ToInt32(myCommand.Parameters["@Retorno"].Value);      
+                SqlParameter valor = new SqlParameter("@Retorno", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                myCommand.Parameters.Add(valor);
+                int respostaSP = Convert.ToInt32(myCommand.Parameters["@Retorno"].Value);
 
-        //            // Se o registo foi bem-sucedido, enviar o email de ativação
-        //            if (respostaSP == 1)
-        //            {
-        //                string token = string.Empty;
-        //                int idUser = 0;
+                // Se o registo foi bem-sucedido, enviar o email de ativação
+                if (respostaSP == 1)
+                {
+                    string token = string.Empty;
+                    int idUser = 0;
 
-        //                SqlDataReader reader = myCommand.ExecuteReader();
-        //                if (reader.Read())
-        //                {
-        //                   token = reader["@TokenAtivacao"].ToString();
-        //                   idUser = (int)reader["@Id_Utilizador"];
-        //                }
-        //                myConn.Close();
-        //                master.EnviaEmail(tb_email.Text, token);
-        //            }             
-        //        }
-
-        //    }
+                    SqlDataReader reader = myCommand.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        token = reader["@TokenAtivacao"].ToString();
+                        idUser = (int)reader["@Id_Utilizador"];
+                    }
+                    myConn.Close();
+                    master.EnviaEmail(tb_email.Text, token);
+                }
+            }
+        }
     }
 }
