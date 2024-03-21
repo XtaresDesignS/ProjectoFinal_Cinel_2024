@@ -95,32 +95,33 @@ namespace ProjectoFinal_Cinel_2024.Pages
         public void EnviaEmail(string to, string token)
         {
             // As configurações do servidor SMTP foram obtidas.
-            string smtpServer = ConfigurationManager.AppSettings["SMTP_URL"];
-            string from = ConfigurationManager.AppSettings["SMTPMailUser"];
+            string smtpServer = ConfigurationManager.AppSettings["SMTP_URL_Gmail"];
+            string from = ConfigurationManager.AppSettings["SMTP_UserName_Gmail"];
 
             // O cliente SMTP foi criado.
             SmtpClient client = new SmtpClient(smtpServer);
 
             // SSL foi ativado e a porta foi definida.
             client.EnableSsl = true;
-            client.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"]);
+            client.Port = int.Parse(ConfigurationManager.AppSettings["SMTP_TLS_Port_Gmail"]);
 
             // As credenciais foram fornecidas para autenticação no servidor SMTP.
-            client.Credentials = new System.Net.NetworkCredential(from, ConfigurationManager.AppSettings["SMTP_PASSWORD"]);
+            client.Credentials = new System.Net.NetworkCredential(from, ConfigurationManager.AppSettings["SMTP_Pssword_Gmail"]);
 
             // O link de ativação foi criado.
             string linkAtivacao = $"https://localhost:44365/Pages/ativar.aspx?token={token}";
 
             // O corpo do e-mail foi criado, incluindo o link de ativação.
-            string body = $"A equipa da CINEL da-lhe as boas-vindas,\n\nQueira por favor, clicar no link abaixo para ativar a sua conta:\n\n{linkAtivacao}\n\nCumprimentos,\nEquipa COINCLUB\n\n";
+            string body = $"A equipa da CINEL da-lhe as boas-vindas,\n\nQueira por favor, clicar no link abaixo para ativar a sua conta:\n\n{linkAtivacao}\n\nCumprimentos,\nEquipa Cinel_MT Staff\n\n";
 
             // A mensagem de e-mail foi criada, incluindo o remetente, o destinatário e o assunto.
             MailMessage mail = new MailMessage(from, to);
-            mail.From = new MailAddress(from, "COINCLUB");
+            mail.From = new MailAddress(from, "Cinel_MT");
             mail.Subject = "Ativação de conta";
 
             // Um objeto LinkedResource foi criado para a imagem do logotipo.
-            LinkedResource logo = new LinkedResource("/Images/logo.png", MediaTypeNames.Image.Jpeg);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Images/logo.png");
+            LinkedResource logo = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
             logo.ContentId = "LogoEmpresa";
 
             // A imagem foi adicionada ao corpo do e-mail.

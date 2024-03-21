@@ -95,6 +95,7 @@
     <Content Include="Assets\CSS\Styles.css" />
     <Content Include="Assets\dlls\itextsharp.dll" />
     <Content Include="Assets\dlls\itextsharp.xmlworker.dll" />
+    <Content Include="Assets\Images\logo.png" />
     <Content Include="Assets\JS\MainScript.js" />
     <Content Include="Assets\WebServices\EncriptDesencript.asmx" />
     <Content Include="Assets\XMLS\Formata_Avatar.xslt" />

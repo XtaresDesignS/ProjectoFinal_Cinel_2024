@@ -44,6 +44,10 @@
             <asp:RegularExpressionValidator ID="rev_email" runat="server" ControlToValidate="tb_email" ErrorMessage="E-mail mal composto !!!" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
             <br />
             <br />
+            <asp:Image CssClass="signup-tb" ID="img_userReg0" runat="server" ImageUrl="~/Images/user.png" />
+        <asp:TextBox CssClass="signup-tb" ID="tb_nif" runat="server" placeholder="Name" BorderStyle="None" Width="265px"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="rfv_nif" runat="server" ControlToValidate="tb_nif" ErrorMessage="Campo obrigatório !!!" ForeColor="Red">*</asp:RequiredFieldValidator>
+            <br />
             <br />
             <asp:Button CssClass="signup-btn" ID="btn_registarUser" runat="server" OnClick="btn_registarUser_Click" Text="Registar" Width="90px" />
 

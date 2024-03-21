@@ -168,6 +168,33 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
         protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_email;
 
         /// <summary>
+        /// img_userReg0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image img_userReg0;
+
+        /// <summary>
+        /// tb_nif control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_nif;
+
+        /// <summary>
+        /// rfv_nif control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_nif;
+
+        /// <summary>
         /// btn_registarUser control.
         /// </summary>
         /// <remarks>
