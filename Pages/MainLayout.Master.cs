@@ -55,11 +55,33 @@ namespace ProjectoFinal_Cinel_2024.Pages
             StringBuilder xmlBuilder = new StringBuilder();
             xmlBuilder.Append("<data>");
 
-            // Adicione a informação do perfil do usuário logado ao XML
+            // Adicione a informação do usuário logado ao XML
             xmlBuilder.Append("<user>");
             xmlBuilder.AppendFormat("<id_Utilizador>{0}</id_Utilizador>", Session["id_Utilizador"]);
             xmlBuilder.AppendFormat("<nome>{0}</nome>", Session["Nome_Utilizador"]);
-            xmlBuilder.AppendFormat("<perfil>{0}</perfil>", Session["logado"]);
+
+            if (Session["logado"] != null)
+            {
+
+                // Divide a string de perfis em perfis individuais
+                string[] perfis = Session["logado"].ToString().Split(',');
+
+                // Cria uma nova sessão para cada perfil retornado no login
+                for (int i = 0; i < perfis.Length; i++)
+                {
+                    Session["perfil" + (i + 1)] = perfis[i].Trim();
+                }
+            }
+
+
+            // Adiciona cada perfil retornado no login ao XML
+            int pf = 1;
+            while (Session["perfil" + pf] != null)
+            {
+                xmlBuilder.AppendFormat("<perfil>{0}</perfil>", Session["perfil" + pf]);
+                pf++;
+            }
+
             xmlBuilder.AppendFormat("<imagem>{0}</imagem>", Session["Img_utilizador"]);
             xmlBuilder.Append("</user>");
             xmlBuilder.Append("</data>");
@@ -67,8 +89,8 @@ namespace ProjectoFinal_Cinel_2024.Pages
             xml_menuContnt.DocumentContent = xmlBuilder.ToString();
             xml_Avatar.DocumentContent = xmlBuilder.ToString();
             VerificaBtns();
-
         }
+
         // mostra e esconde os btns do log out
         public void VerificaBtns()
         {

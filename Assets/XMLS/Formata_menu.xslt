@@ -6,29 +6,29 @@
 
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test="data/user/perfil ='Admin'">
+      <xsl:when test="contains(data/user/perfil, 'Admin')">
         <a class="dropdown-item" href="/Pages/FristBackend.aspx">Dashboard</a>
-        <a class="dropdown-item" href="/Pages/Carrega_Coins.aspx">Novas Coins</a>
+        <a class="dropdown-item" href="/Pages/Carrega_Coins.aspx"> Area Admin</a>
         <hr/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="data/user/perfil='RH'">
+          <xsl:when test="contains(data/user/perfil, 'RH')">
             <a class="dropdown-item" href="/Pages/FristBackend.aspx">Dashboard</a>
-            <a class="dropdown-item" href="/Pages/Carrega_Coins.aspx">Novas Coins</a>
+            <a class="dropdown-item" href="/Pages/Carrega_Coins.aspx">Area RH</a>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
-              <xsl:when test="data/user/perfil = 'Formador'">
+              <xsl:when test="contains(data/user/perfil, 'Formador')">
                 <a class="dropdown-item" href="/Pages/alterar.aspx">Alterar Palavra-Passe</a>
-                <a class="dropdown-item" href="/Pages/Collect.aspx?id={data/user/id_Utilizador}">Minhas Colleções de Coins</a>
+                <a class="dropdown-item" href="/Pages/DetailsPage.aspx?id={data/user/id_Utilizador}">Area Formado</a>
                 <hr/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:choose>
-                  <xsl:when test="data/user/perfil = 'Formando'">
+                  <xsl:when test="contains(data/user/perfil, 'Formando')">
                     <a class="dropdown-item" href="/Pages/alterar.aspx">Alterar Palavra-Passe</a>
-                    <a class="dropdown-item" href="/Pages/Collect.aspx?id={data/user/id_Utilizador}">Minhas Colleções de Coins</a>
+                    <a class="dropdown-item" href="/Pages/DetailsPage.aspx?id={data/user/id_Utilizador}">Area Formando</a>
                     <hr/>
                   </xsl:when>
                   <xsl:otherwise>

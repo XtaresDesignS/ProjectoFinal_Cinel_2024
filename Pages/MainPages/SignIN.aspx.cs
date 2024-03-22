@@ -18,53 +18,56 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
 
         }
 
-        //protected void btn_signin_Click(object sender, EventArgs e)
-        //{
-        //    string nomeUtilizador = tb_utilizador.Text;
-        //    string senha = tb_pw.Text;
-        //    LoginUsuario(nomeUtilizador, senha);
-        //}
+        protected void btn_Login_Click(object sender, EventArgs e)
+        {
+            string emailUtilizador = tb_email_utilizador.Text;
+            string senha = tb_pass_utilizador.Text;
+            LoginUsuario(emailUtilizador, senha);
+        }
 
-        //public void LoginUsuario(string nomeUtilizador, string senha)
-        //{
-        //    var master = this.Master as MainLayout;
-        //    EncriptDesencript passEncDEnc = new EncriptDesencript();
-        //    string nomeUtilizador = tb_nome_utilizador.Text;
-        //    string pass = passEncDEnc.Encriptar(tb_pass_utilizador.Text);
-        //    using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["NumismaticaConnectionString"].ConnectionString))
-        //    {
-        //        using (SqlCommand myCommand = new SqlCommand("AuthenticaUser", myConn))
-        //        {
-        //            myCommand.CommandType = CommandType.StoredProcedure;
-        //            myCommand.Parameters.AddWithValue("@Email_Utilizado", nomeUtilizador);
-        //            myCommand.Parameters.AddWithValue("@Pass_Utilizador", pass);
-        //            SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.VarChar, 500);
-        //            returnParameter.Direction = ParameterDirection.Output;
-        //            myConn.Open();
-        //            myCommand.ExecuteNonQuery();
-        //            string result = returnParameter.Value.ToString();
-        //            if (result == "Sucesso")
-        //            {
-        //                using (SqlDataReader reader = myCommand.ExecuteReader())
-        //                {
-        //                    if (reader.Read())
-        //                    {   // Armazena todas as informações do usuário na sessão aqui
-        //                        Session["id_Utilizador"] = reader["id_Utilizador"].ToString();
-        //                        Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
-        //                        Session["Img_utilizador"] = ((byte[])reader["Foto_Utilizador"]).Length > 0 ? $"data:image/PNG;base64,{Convert.ToBase64String((byte[])reader["Foto_Utilizador"])}" : $@"https://picsum.photos/200";
-        //                        Session["logado"] = reader["Nome_Perfil"].ToString();
-        //                    }
-        //                }
-        //                Response.Redirect("/MainPages/Landing.aspx");
-        //                // Chama o método
-        //                master.CarregaXML();
-        //            }
-        //            else
-        //            {
-        //                lb_Mensagem.Text = result;
-        //            }
-        //        }
-        //    }
-        //}
+        public void LoginUsuario(string utilizador, string senha)
+        {
+            var master = this.Master as MainLayout;
+            EncriptDesencript passEncDEnc = new EncriptDesencript();
+            string pass = passEncDEnc.Encriptar(senha);
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["GestCinel2_DBConnectionString"].ConnectionString))
+            {
+                using (SqlCommand myCommand = new SqlCommand("AuthenticaUser", myConn))
+                {
+                    myCommand.CommandType = CommandType.StoredProcedure;
+                    myCommand.Parameters.AddWithValue("@Email_Utilizado", utilizador);
+                    myCommand.Parameters.AddWithValue("@Pass_Utilizador", pass);
+                    SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.Int);
+                    SqlParameter messageParameter = myCommand.Parameters.Add("@Message", SqlDbType.VarChar, 255);
+                    returnParameter.Direction = ParameterDirection.Output;
+                    messageParameter.Direction = ParameterDirection.Output;
+                    myConn.Open();
+                    using (SqlDataReader reader = myCommand.ExecuteReader())
+                    {
+                        int result = (int)returnParameter.Value;
+                        string message = (string)messageParameter.Value;
+                        if (result == 1)
+                        {
+                            while (reader.Read())
+                            {   // Armazena todas as informações do usuário na sessão aqui
+                                Session["id_Utilizador"] = reader["id_Utilizador"].ToString();
+                                Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
+                                Session["Img_utilizador"] = ((byte[])reader["Foto_Utilizador"]).Length > 0 ? $"data:image/PNG;base64,{Convert.ToBase64String((byte[])reader["Foto_Utilizador"])}" : $@"https://picsum.photos/200";
+                                Session["logado"] = reader["Perfis"].ToString();
+                            }
+                            Response.Redirect("/MainPages/Landing.aspx");
+                            // Chama o método
+                            master.CarregaXML();
+                        }
+                        else
+                        {
+                            lb_Mensagem.Text = message;
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }

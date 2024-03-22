@@ -65,7 +65,7 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
                     string token = tokenAtivacao.Value.ToString();
                     var master = this.Master as MainLayout;
                     master.EnviaEmail(tb_email.Text, token);
-                    ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='Inicio.aspx' }, 3000);", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='/SignIN.aspx' }, 1000);", true);
                 }
                 else
                     ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", "setTimeout(function(){ window.location='SignUp.aspx' }, 1500);", true);

@@ -106,6 +106,7 @@
     <Content Include="Pages\errorPages\Error404.aspx" />
     <Content Include="Pages\errorPages\Errors.aspx" />
     <Content Include="Pages\errorPages\LogError.aspx" />
+    <Content Include="Pages\MainPages\ativar.aspx" />
     <Content Include="Pages\MainPages\GooglePage.aspx" />
     <Content Include="Pages\MainPages\Landing.aspx" />
     <Content Include="Pages\MainPages\SignIN.aspx" />
@@ -165,6 +166,13 @@
     </Compile>
     <Compile Include="Pages\errorPages\LogError.aspx.designer.cs">
       <DependentUpon>LogError.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ativar.aspx.cs">
+      <DependentUpon>ativar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\MainPages\ativar.aspx.designer.cs">
+      <DependentUpon>ativar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\GooglePage.aspx.cs">
       <DependentUpon>GooglePage.aspx</DependentUpon>
