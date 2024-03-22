@@ -30,10 +30,18 @@
                     <a class="dropdown-item" href="/Pages/alterar.aspx">Alterar Palavra-Passe</a>
                     <a class="dropdown-item" href="/Pages/DetailsPage.aspx?id={data/user/id_Utilizador}">Area Formando</a>
                     <hr/>
-                  </xsl:when>
+                  </xsl:when>                  
                   <xsl:otherwise>
-                    <a class="dropdown-item" href="/Pages/Login.aspx">Login</a>
-                    <a class="dropdown-item" href="/Pages/Regist.aspx">Registo</a>
+                    <xsl:choose>
+                      <xsl:when test="string(data/user/id_Utilizador) != ''">
+                        <a class="dropdown-item" href="/Pages/alterar.aspx">Cursos</a>
+                        <a class="dropdown-item" href="/Pages/DetailsPage.aspx?id={data/user/id_Utilizador}">Inscrições</a>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <a class="dropdown-item" href="\Pages\MainPages\SignIN.aspx">Log in</a>
+                        <a class="dropdown-item" href="\Pages\MainPages\SignUP.aspx">Registar</a>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:otherwise>
                 </xsl:choose>
 

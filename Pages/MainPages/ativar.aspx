@@ -6,5 +6,6 @@
 
     <br />
     <br />
-    <asp:Button ID="btn_PedirAtivacao" runat="server" OnClick="btn_PedirAtivacao_Click" Text="Pedir Nova Ativação" Width="157px" /
+    <asp:Button ID="btn_PedirAtivacao" runat="server" OnClick="btn_PedirAtivacao_Click" Text="Pedir Nova Ativação" Width="157px"/>
+
 </asp:Content>

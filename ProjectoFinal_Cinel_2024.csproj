@@ -99,7 +99,9 @@
     <Content Include="Assets\JS\MainScript.js" />
     <Content Include="Assets\WebServices\EncriptDesencript.asmx" />
     <Content Include="Assets\XMLS\Formata_Avatar.xslt" />
-    <Content Include="Assets\XMLS\Formata_menu.xslt" />
+    <Content Include="Assets\XMLS\Formata_menu.xslt">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Pages\BackendPages\Pages\Cursos.aspx" />
     <Content Include="Pages\BackendPages\Pages\Landing_back.aspx" />
     <Content Include="Pages\DetailsPage.aspx" />

@@ -44,29 +44,31 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
                     myConn.Open();
                     using (SqlDataReader reader = myCommand.ExecuteReader())
                     {
-                        int result = (int)returnParameter.Value;
-                        string message = (string)messageParameter.Value;
-                        if (result == 1)
+                        if (reader.Read())
                         {
-                            while (reader.Read())
-                            {   // Armazena todas as informações do usuário na sessão aqui
-                                Session["id_Utilizador"] = reader["id_Utilizador"].ToString();
-                                Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
-                                Session["Img_utilizador"] = ((byte[])reader["Foto_Utilizador"]).Length > 0 ? $"data:image/PNG;base64,{Convert.ToBase64String((byte[])reader["Foto_Utilizador"])}" : $@"https://picsum.photos/200";
-                                Session["logado"] = reader["Perfis"].ToString();
-                            }
-                            Response.Redirect("/MainPages/Landing.aspx");
-                            // Chama o método
-                            master.CarregaXML();
+                            // Armazena todas as informações do usuário na sessão aqui
+                            Session["id_Utilizador"] = reader["id_Utilizador"].ToString();
+                            Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
+                            Session["Img_utilizador"] = ((byte[])reader["Foto_Utilizador"]).Length > 0 ? $"data:image/PNG;base64,{Convert.ToBase64String((byte[])reader["Foto_Utilizador"])}" : $@"https://picsum.photos/200";
+                            Session["logado"] = reader["Perfis"].ToString();
                         }
-                        else
-                        {
-                            lb_Mensagem.Text = message;
-                        }
+                    }
+                    int result = (int)returnParameter.Value;
+                    string message = (string)messageParameter.Value;
+                    if (result == 1)
+                    {
+                        Response.Redirect("/Pages/MainPages/Landing.aspx");
+                        // Chama o método
+                        master.CarregaXML();
+                    }
+                    else
+                    {
+                        lb_Mensagem.Text = message;
                     }
                 }
             }
         }
+
 
 
     }

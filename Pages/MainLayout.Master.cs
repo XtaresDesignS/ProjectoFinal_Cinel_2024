@@ -59,7 +59,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
             xmlBuilder.Append("<user>");
             xmlBuilder.AppendFormat("<id_Utilizador>{0}</id_Utilizador>", Session["id_Utilizador"]);
             xmlBuilder.AppendFormat("<nome>{0}</nome>", Session["Nome_Utilizador"]);
-
+            xmlBuilder.AppendFormat("<imagem>{0}</imagem>", Session["Img_utilizador"]);
             if (Session["logado"] != null)
             {
 
@@ -82,7 +82,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
                 pf++;
             }
 
-            xmlBuilder.AppendFormat("<imagem>{0}</imagem>", Session["Img_utilizador"]);
+          
             xmlBuilder.Append("</user>");
             xmlBuilder.Append("</data>");
 
@@ -110,6 +110,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
         protected void btn_Logout_Click1(object sender, EventArgs e)
         {
             Session.Clear();
+            Session.Abandon();
             Session["logado"] = string.Empty;
             Response.Redirect("/Pages/Login.aspx");
             CarregaXML();
@@ -131,7 +132,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
             client.Credentials = new System.Net.NetworkCredential(from, ConfigurationManager.AppSettings["SMTP_Pssword_Gmail"]);
 
             // O link de ativação foi criado.
-            string linkAtivacao = $"https://localhost:44365/Pages/ativar.aspx?token={token}";
+            string linkAtivacao = $"https://localhost/Pages/MainPages/ativar.aspx?token={token}";
 
             // O corpo do e-mail foi criado, incluindo o link de ativação.
             string body = $"A equipa da CINEL da-lhe as boas-vindas,\n\nQueira por favor, clicar no link abaixo para ativar a sua conta:\n\n{linkAtivacao}\n\nCumprimentos,\nEquipa Cinel_MT Staff\n\n";

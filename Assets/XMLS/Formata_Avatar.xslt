@@ -7,7 +7,7 @@
   <xsl:template match="/">
 
     <xsl:choose>
-      <xsl:when test="data/user/id_Utilizador">
+      <xsl:when test="contains(data/user/perfil, 'Admin')">
         <img class="Avatar" width="40px" heigth="40px" style=" border-radius:50%;" src="{data/user/imagem}" />
         <a
             class="dropdown-toggle"
@@ -18,28 +18,93 @@
             aria-expanded="false">
           <xsl:value-of select="data/user/nome"></xsl:value-of>
         </a>
-      </xsl:when>   
+      </xsl:when>
       <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="contains(data/user/perfil, 'RH')">
+            <img class="Avatar" width="40px" heigth="40px" style=" border-radius:50%;" src="{data/user/imagem}" />
+            <a
+                class="dropdown-toggle"
+                href="#"
+                id="dropdownId"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+              <xsl:value-of select="data/user/nome"></xsl:value-of>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:choose>
+              <xsl:when test="contains(data/user/perfil, 'Formador')">
+                <img class="Avatar" width="40px" heigth="40px" style=" border-radius:50%;" src="{data/user/imagem}" />
+                <a
+                    class="dropdown-toggle"
+                    href="#"
+                    id="dropdownId"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                  <xsl:value-of select="data/user/nome"></xsl:value-of>
+                </a>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:choose>
+                  <xsl:when test="contains(data/user/perfil, 'Formando')">
+                    <img class="Avatar" width="40px" heigth="40px" style=" border-radius:50%;" src="{data/user/imagem}" />
+
                     <a
-                   class="nav-link dropdown-toggle"
-                   href="#"
-                   id="dropdownId"
-                   data-toggle="dropdown"
-                   aria-haspopup="false"
-                   aria-expanded="false"
-            >
-                      <lord-icon
-                        src="https://cdn.lordicon.com/bgebyztw.json"
-                        trigger="in"
-                        delay="2000"
-                        state="hover-looking-around"
-                        style="width: 30px; height: 30px"
-              >
-                      </lord-icon>
-                      <span> Utilizador</span>
+                        class="dropdown-toggle"
+                        href="#"
+                        id="dropdownId"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                      <xsl:value-of select="data/user/nome"></xsl:value-of>
                     </a>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:choose>
+                      <xsl:when test="string(data/user/id_Utilizador) != ''">
+                        <img class="Avatar" width="40px" heigth="40px" style=" border-radius:50%;" src="{data/user/imagem}" />
+
+                        <a
+                            class="dropdown-toggle"
+                            href="#"
+                            id="dropdownId"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                          <xsl:value-of select="data/user/nome"></xsl:value-of>
+                        </a>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <a
+                       class="nav-link dropdown-toggle"
+                       href="#"
+                       id="dropdownId"
+                       data-toggle="dropdown"
+                       aria-haspopup="false"
+                       aria-expanded="false"
+           >
+                          <lord-icon
+                            src="https://cdn.lordicon.com/bgebyztw.json"
+                            trigger="in"
+                            delay="2000"
+                            state="hover-looking-around"
+                            style="width: 30px; height: 30px"
+             >
+                          </lord-icon>
+                          <span> Utilizador</span>
+                        </a>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:otherwise>
-             
+                </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
 
 
 

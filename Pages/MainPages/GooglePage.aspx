@@ -2,5 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderMain" runat="server">
+
+
+
 </asp:Content>
-<a href="../errorPages/LogError.aspx">../errorPages/LogError.aspx</a>
