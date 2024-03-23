@@ -148,7 +148,7 @@ namespace ProjectoFinal_Cinel_2024.Pages
             logo.ContentId = "LogoEmpresa";
 
             // A imagem foi adicionada ao corpo do e-mail.
-            AlternateView av = AlternateView.CreateAlternateViewFromString(body + "<img src='cid:LogoEmpresa'/>", null, MediaTypeNames.Text.Html);
+            AlternateView av = AlternateView.CreateAlternateViewFromString(body + "<img src='cid:LogoEmpresa' style='max-width:25%; aspect-ration:4/3;'/>", null, MediaTypeNames.Text.Html);
             av.LinkedResources.Add(logo);
 
             mail.AlternateViews.Add(av);

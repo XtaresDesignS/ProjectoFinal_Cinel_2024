@@ -59,6 +59,7 @@ namespace ProjectoFinal_Cinel_2024.Pages.MainPages
                     {
                         Response.Redirect("/Pages/MainPages/Landing.aspx");
                         // Chama o método
+                        Session["pw"] = senha;
                         master.CarregaXML();
                     }
                     else

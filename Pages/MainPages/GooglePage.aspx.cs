@@ -3,6 +3,7 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Util.Store;
+using ProjectoFinal_Cinel_2024.Assets.WebServices;
 using System;
 using System.Configuration;
 using System.Data;
@@ -10,6 +11,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Web.UI;
 
 namespace ProjectoFinal_Cinel_2024.Pages
 {
@@ -56,77 +58,71 @@ namespace ProjectoFinal_Cinel_2024.Pages
                 string email = profile.Email;
                 string imageUrl = profile.Picture;
                 InfosUtilizador(nomeUtilizador, email, imageUrl);
-
+              
             }
         }
 
-        bool v = false;
-
+       
         private void InfosUtilizador(string nomeUtilizador, string email, string imageUrl)
         {
-            // Obtém a página mestra atual como um objeto Layout
+            bool v = false;
             var master = this.Master as MainLayout;
-            // Cria um novo objeto EncripDesencript
-            Assets.WebServices.EncriptDesencript passEncDEnc = new Assets.WebServices.EncriptDesencript();
-            // Gera uma nova senha
+            EncriptDesencript passEncDEnc = new EncriptDesencript();
             string passAuto = master.GerarNovaPalavraPasse();
-
+            string password = passEncDEnc.Encriptar(passAuto);
             byte[] imgBinary = null;
             string imgType;
-
             if (string.IsNullOrEmpty(email))
             {
-                email = $"{nomeUtilizador}t@email.com"; // Substitua por um valor padrão adequado
+                email = $"{nomeUtilizador}t@email.com"; 
             }
-
-
-            // Cria uma solicitação web para a URL da foto
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
-            // Obtém a resposta da solicitação web
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
                 using (Stream responseStream = response.GetResponseStream())
                 {
-                    // Copia o fluxo de resposta para um MemoryStream
                     using (MemoryStream ms = new MemoryStream())
                     {
                         responseStream.CopyTo(ms);
-                        // Converte o MemoryStream num array de bytes
                         imgBinary = ms.ToArray();
                     }
                 }
                 imgType = response.ContentType;
             }
-            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["NumismaticaConnectionString"].ConnectionString))
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["GestCinel2_DBConnectionString"].ConnectionString))
             {
                 using (SqlCommand myCommand = new SqlCommand("VerificaUtilizador", myConn))
                 {
                     myCommand.CommandType = CommandType.StoredProcedure;
                     myCommand.Parameters.AddWithValue("@Nome_Utilizador", nomeUtilizador);
                     myCommand.Parameters.AddWithValue("@Email_Utilizador", email);
-                    // Cria um novo parâmetro de retorno
-                    SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.VarChar, 500);
-                    returnParameter.Direction = ParameterDirection.Output;
+                    SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.Int);
+                    returnParameter.Direction = ParameterDirection.Output;            
                     SqlParameter passwordParameter = myCommand.Parameters.Add("@Password_Utilizador", SqlDbType.VarChar, 500);
                     passwordParameter.Direction = ParameterDirection.Output;
                     SqlParameter idParameter = myCommand.Parameters.Add("@Id_Utilizador", SqlDbType.Int);
                     idParameter.Direction = ParameterDirection.Output;
-
                     myConn.Open();
                     myCommand.ExecuteNonQuery();
-                    string result = returnParameter.Value.ToString();
-                    if (result == "Utilizador Não Existe")
+                    int result = (int)returnParameter.Value;
+                    
+                    if (result != 1)
                     {
-                        Session["pw"] = passAuto;
-                        RegistaUtilizador(nomeUtilizador, email, passEncDEnc.Encriptar(passAuto.ToUpper()), imgBinary, imgType);
+                        v = true;
+                        Session["pw"] = password;
+                        RegistaUtilizador(nomeUtilizador, email, password, imgBinary, imgType);                   
                     }
                     else
                     {
-                        string password = passwordParameter.Value.ToString();
-                        Session["pw"] = password;
+                        v = false;
+                        string user = nomeUtilizador;
+                        string eml = email;
+                        string pass =  passwordParameter.Value.ToString();
+                        Session["pw"] = passEncDEnc.Desencriptar((string)pass);
                         int id = (int)idParameter.Value;
-                        FazLogin(nomeUtilizador, password, imgBinary, imgType, id);
+                        FazLogin(eml, pass, imgBinary, imgType, id, v);
                     }
+                    myConn.Close();
                 }
             }
         }
@@ -134,127 +130,102 @@ namespace ProjectoFinal_Cinel_2024.Pages
         // Método para registar um novo utilizador
         private void RegistaUtilizador(string nomeUtilizador, string email, string passAuto, byte[] imgBinary, string imgType)
         {
-            // Obtém a página mestra atual como um objeto Layout
             var master = this.Master as MainLayout;
-            // Cria um novo objeto EncripDesencript
-            Assets.WebServices.EncriptDesencript passEncDEnc = new Assets.WebServices.EncriptDesencript();
-            // Inicializa a variável resultado
             int resultado = 0;
-            // Cria uma nova conexão SQL
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NumismaticaConnectionString"].ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["GestCinel2_DBConnectionString"].ConnectionString))
             {
-                // Cria um novo comando SQL
-                using (SqlCommand mycommand = new SqlCommand("RegistaUtilizador", connection))
+                using (SqlCommand mycommand = new SqlCommand("RegistaUtilizadorGoogle", connection))
                 {
-                    // Abre a conexão
                     connection.Open();
-                    // Define o tipo de comando como StoredProcedure
                     mycommand.CommandType = CommandType.StoredProcedure;
-                    // Adiciona os parâmetros necessários ao comando
                     mycommand.Parameters.AddWithValue("@Nome_utilizador", nomeUtilizador);
                     mycommand.Parameters.AddWithValue("@Email_Utilizador", email);
-                    mycommand.Parameters.AddWithValue("@Pass_Utilizador", passAuto); // Aqui precisas fornecer a senha do utilizador
+                    mycommand.Parameters.AddWithValue("@Pass_Utilizador", passAuto);
                     mycommand.Parameters.AddWithValue("@imagem_utilizador", imgBinary);
                     mycommand.Parameters.AddWithValue("@estado_conta", 1);
-                    // Cria um novo parâmetro para o ID do utilizador
                     SqlParameter userId = mycommand.Parameters.Add("@Id_Utilizador", SqlDbType.Int);
                     userId.Direction = ParameterDirection.Output;
-                    // Executa o comando
                     mycommand.ExecuteNonQuery();
-                    // Obtém o resultado do comando
-
                     using (SqlDataReader reader = mycommand.ExecuteReader())
                     {
-                        // Se houver dados para ler
                         if (reader.Read())
                         {
                             resultado = (int)reader["Resultado"];
+
                         }
                     }
-                    // Armazena o ID do utilizador na sessão
-                    Session["id_Utilizador"] = userId;
-                    // Armazena o nome do utilizador na sessão
+
+                    Session["id_Utilizador"] = userId.Value;
                     Session["Nome_Utilizador"] = nomeUtilizador.ToString();
-                    // Armazena a imagem do utilizador na sessão
                     Session["Img_utilizador"] = ((byte[])imgBinary).Length > 0 ? $"data:image/{imgType};base64,{Convert.ToBase64String((byte[])imgBinary)}" : $@"https://picsum.photos/200";
+                    Session["logado"] = "Utilizador";
+                    connection.Close();
                 }
-                // Fecha a conexão
-                connection.Close();
+                
             }
-            // Se o resultado for 1
             if (resultado == 1)
             {
-                v = true;
-                // Define o estado da sessão como "Guest"
-                Session["logado"] = "Guest";
-                // Redireciona o utilizador para a página de alteração de senha
-
-                // Carrega o XML
-                FazLogin(nomeUtilizador, passAuto, imgBinary, imgType, (int)Session["id_Utilizador"]);
+               bool p = true;
+                FazLogin(nomeUtilizador, passAuto, imgBinary, imgType, (int)Session["id_Utilizador"], p);
             }
+           
         }
 
         // Método para fazer login do utilizador
-        private void FazLogin(string nomeUtilizador, string passAuto, byte[] imgBinary, string imgType, int id)
-        {
-            // Obtém a página mestra atual como um objeto Layout
+        private void FazLogin(string email, string passAuto, byte[] imgBinary, string imgType, int id, bool v)
+        {           
             var master = this.Master as MainLayout;
-            // Cria uma nova conexão SQL
-            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["NumismaticaConnectionString"].ConnectionString))
+            using (SqlConnection myConn = new SqlConnection(ConfigurationManager.ConnectionStrings["GestCinel2_DBConnectionString"].ConnectionString))
             {
-                // Cria um novo comando SQL
-                using (SqlCommand myCommand = new SqlCommand("VerificaLogin", myConn))
+                using (SqlCommand myCommand = new SqlCommand("LoginGoogle", myConn))
                 {
-                    // Define o tipo de comando como StoredProcedure
                     myCommand.CommandType = CommandType.StoredProcedure;
-                    // Adiciona os parâmetros necessários ao comando
-                    myCommand.Parameters.AddWithValue("@Nome_Utilizador", nomeUtilizador);
+                    myCommand.Parameters.AddWithValue("@Email_Utilizador", email);
                     myCommand.Parameters.AddWithValue("@Pass_Utilizador", passAuto);
-                    // Cria um novo parâmetro de retorno
-                    SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.VarChar, 500);
+                    // Adicione o parâmetro de saída @Message
+                    SqlParameter messageParameter = myCommand.Parameters.Add("@Message", SqlDbType.VarChar, 255);
+                    messageParameter.Direction = ParameterDirection.Output;
+                    SqlParameter returnParameter = myCommand.Parameters.Add("@Retorno", SqlDbType.Int);
                     returnParameter.Direction = ParameterDirection.Output;
-                    // Abre a conexão
                     myConn.Open();
-                    // Executa o comando
                     myCommand.ExecuteNonQuery();
-                    // Obtém o resultado do comando
                     string result = returnParameter.Value.ToString();
-                    // Se o resultado for "Sucesso"
-                    if (result == "Sucesso")
+                    string message = messageParameter.Value.ToString(); // Obtenha o valor do parâmetro @Message
+
+                    if (result == "1")
                     {
-                        // Lê os dados do comando
                         using (SqlDataReader reader = myCommand.ExecuteReader())
                         {
-                            // Se houver dados para ler
                             if (reader.Read())
                             {
-                                // Armazena o ID do utilizador na sessão
-                                Session["id_Utilizador"] = id.ToString();
-                                // Armazena o nome do utilizador na sessão
+                                Session["id_Utilizador"] = (int)reader["id_Utilizador"];
                                 Session["Nome_Utilizador"] = reader["Nome_Utilizador"].ToString();
-                                // Armazena a imagem do utilizador na sessão
                                 Session["Img_utilizador"] = ((byte[])imgBinary).Length > 0 ? $"data:image/{imgType};base64,{Convert.ToBase64String((byte[])imgBinary)}" : $@"https://picsum.photos/200";
-                                // Armazena o perfil do utilizador na sessão
-                                Session["logado"] = reader["Nome_Perfil"].ToString();
+                                Session["logado"] = reader["Perfis"].ToString();
                             }
-                        }
-                        if (v)
-                        {
-
-                            // Redireciona o utilizador para a página Montra
-                            Response.Redirect($"/Pages/alterar.aspx?altPw={passAuto}");
-                        }
-                        else
-                        {
-
-                            Response.Redirect($"/Pages/Landing.aspx");
-                        }
-                        // Carrega o XML
-                        master.CarregaXML();
+                        }                      
                     }
-
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "redirectUser", 
+                            "alert(' " +
+                            $"UPS parece que existiu um erro, {message}" +
+                            "')", true);
+                    }
+                    myConn.Close();
+                  
+                    master.CarregaXML();
+                }
+                if (v==true)
+                {
+                    Response.Redirect($@"/Pages/alteraPW.aspx?pwG={passAuto}");
+                }
+                else
+                {
+                    Response.Redirect($@"/Pages/MainPages/Perfil_User.aspx?U={id}");
                 }
             }
+         
         }
 
     }

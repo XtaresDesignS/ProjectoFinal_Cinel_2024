@@ -102,6 +102,7 @@
     <Content Include="Assets\XMLS\Formata_menu.xslt">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Pages\alteraPW.aspx" />
     <Content Include="Pages\BackendPages\Pages\Cursos.aspx" />
     <Content Include="Pages\BackendPages\Pages\Landing_back.aspx" />
     <Content Include="Pages\DetailsPage.aspx" />
@@ -111,6 +112,7 @@
     <Content Include="Pages\MainPages\ativar.aspx" />
     <Content Include="Pages\MainPages\GooglePage.aspx" />
     <Content Include="Pages\MainPages\Landing.aspx" />
+    <Content Include="Pages\MainPages\Perfil_User.aspx" />
     <Content Include="Pages\MainPages\SignIN.aspx" />
     <Content Include="Pages\MainPages\SignUP.aspx" />
     <Content Include="Web.config" />
@@ -119,6 +121,13 @@
     <Compile Include="Assets\WebServices\EncriptDesencript.asmx.cs">
       <DependentUpon>EncriptDesencript.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pages\alteraPW.aspx.cs">
+      <DependentUpon>alteraPW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\alteraPW.aspx.designer.cs">
+      <DependentUpon>alteraPW.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\BackendPages\BackendLayout.Master.cs">
       <DependentUpon>BackendLayout.Master</DependentUpon>
@@ -196,6 +205,13 @@
     </Compile>
     <Compile Include="Pages\MainPages\Landing.aspx.designer.cs">
       <DependentUpon>Landing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\Perfil_User.aspx.cs">
+      <DependentUpon>Perfil_User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\MainPages\Perfil_User.aspx.designer.cs">
+      <DependentUpon>Perfil_User.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\SignIN.aspx.cs">
       <DependentUpon>SignIN.aspx</DependentUpon>
