@@ -8,65 +8,6 @@
 
 </asp:Content>
 
-<%--<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBackEnd" runat="server">
-    <div class="main-content col">
-        <div id="scheduler_here" class="dhx_cal_container" style='width:90dvw; height:80dvh;'>
-            <div class="dhx_cal_navline">
-                <div class="dhx_cal_prev_button"> </div>
-                <div class="dhx_cal_next_button"> </div>
-                <div class="dhx_cal_today_button"></div>
-                <div class="dhx_cal_date"></div>
-                <div class="dhx_cal_tab" name="day_tab"></div>
-                <div class="dhx_cal_tab" name="week_tab"></div>
-                <div class="dhx_cal_tab" name="month_tab"></div>
-            </div>
-            <div class="dhx_cal_header"></div>
-            <div class="dhx_cal_data"></div>
-        </div>
-        <button id="saveButton" onclick="saveData()">Salvar</button>
-        <script>
-            scheduler.config.drag_resize = false;
-            scheduler.config.drag_move = false;
-            scheduler.config.drag_create = false;
-            scheduler.config.first_hour = 8;
-            scheduler.config.last_hour = 24;
-
-            scheduler.ignore_timeline = function (date) {
-                // Ignora domingos e feriados
-                if (date.getDay() === 0 || isHoliday(date)) {
-                    return true;
-                }
-                return false;
-            };
-
-            scheduler.attachEvent("onClick", function (id, e) {
-                // Código para lidar com o clique do usuário
-                // Você pode usar AJAX para enviar os dados do evento para um script do lado do servidor que irá salvá-lo no banco de dados
-            });
-
-            scheduler.init('scheduler_here', new Date(), "week");
-
-            function saveData() {
-                var events = scheduler.getEvents();
-                var userId = "yourUserId"; // Substitua por seu ID de usuário
-
-                // Aqui você pode usar AJAX para enviar os dados para o servidor
-                // Por exemplo:
-                $.ajax({
-                    url: 'apiUrl', // Substitua por seu URL da API
-                    type: 'POST',
-                    data: {
-                        userId: userId,
-                        events: events
-                    },
-                    success: function (response) {
-                        // Lidar com a resposta do servidor
-                    }
-                });
-            }
-        </script>
-    </div>
-</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBackEnd" runat="server">
      <div class="main-content col">
     <div id="scheduler_here" class="dhx_cal_container" style='width: 90dvw; height: 80dvh;'>
