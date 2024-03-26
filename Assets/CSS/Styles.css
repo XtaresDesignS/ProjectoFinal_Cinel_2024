@@ -347,6 +347,7 @@ lord-icon {
     align-items: center;
 }
 
+
 .container_backend {
     position: relative;
     left: 40px !important;
@@ -713,8 +714,13 @@ html:has(.dark) > .icon.icon-moon,
 .card_user .btn_user:hover {
     box-shadow: 0 0 20px white, 0 0 30px #282828;
 }
-
-
+/*---Calendário ----*/
+.dhx_matrix_cell.isUnpaidLeave, .dhx_marked_timespan.isUnpaidLeave {
+    background-color: #808080 !important;
+    text-align: center;
+    line-height: 14px;
+    color: white;
+}
 
 /* @ Medias, @Keyframes, @Browser_States*/
 
