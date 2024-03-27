@@ -8,6 +8,7 @@
 
 </asp:Content>
 
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBackEnd" runat="server">
      <div class="main-content col">
     <div id="scheduler_here" class="dhx_cal_container" style='width: 90dvw; height: 80dvh;'>
@@ -19,8 +20,9 @@
             <div class="dhx_cal_tab" name="day_tab"></div>
             <div class="dhx_cal_tab" name="week_tab"></div>
             <div class="dhx_cal_tab" name="month_tab"></div>
-            <div class="dhx_cal_tab" name="year_tab"></div>
-            <button id="saveButton" onclick="event.preventDefault(); saveData();">Salvar</button>
+            <!--<button id="saveButton" onclick="event.preventDefault(); sendDataToServer();">Salvar</button>-->
+            <asp:Button ID="saveButton" runat="server" Text="Salvar" />
+
             <button id="markMorningButton" onclick="event.preventDefault(); markMorning();">Marcar Manhã</button>
             <button id="markAfternoonButton" onclick="event.preventDefault(); markAfternoon();">Marcar Tarde</button>
             <button id="markNightButton" onclick="event.preventDefault(); markNight();">Marcar Noite</button>
@@ -91,7 +93,7 @@
         var view = scheduler.getState().mode;
         var date = scheduler.getState().date;
 
-        if (view === "day" || view === "week" || view === "month" || view === "year") {
+        if (view === "day" || view === "week" || view === "month") {
             var startDay = view === "day" ? date.getDate() : 0;
             var endDay = view === "day" ? date.getDate() : (view === "week" ? 7 : new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
             for (var i = startDay; i < endDay; i++) {
@@ -126,6 +128,6 @@
         now.setSeconds(0);
         return date < now;
     }
-   
+
 </script>
 </asp:Content>

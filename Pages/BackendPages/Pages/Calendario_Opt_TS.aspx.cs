@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Web;
+using System.Data.SqlClient;
+using System.Web.Script.Services;
 using System.Web.Services;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ProjectoFinal_Cinel_2024.Pages.BackendPages.Pages
 {
@@ -18,6 +14,10 @@ namespace ProjectoFinal_Cinel_2024.Pages.BackendPages.Pages
         {
 
         }
-      
+
+        private static void InsertEventIntoDatabase(string startDate, string endDate, string text)
+        {
+            
+        }
     }
 }
